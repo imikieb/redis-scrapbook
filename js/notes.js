@@ -55,9 +55,13 @@ async function editNote(id) {
     showNotes();
 }
 
-async function deleteNote(id) {
+async function deleteNote(id, userId) {
     const user = await axios.get(`/users/${userLS}`);
-    await axios.delete(`/notes/${user.data.id}/${id}`);
+    const userId = {
+        userId: user.data.id
+    }
+
+    await axios.delete(`/notes/${user.data.id}/${id}`), userId;
 
     showNotes();
 }
@@ -81,7 +85,7 @@ async function showNotes() {
                 <p>${item.note}</p>
                 <div class="note-button-container margin-bottom">
                     <button class="note-button unselect" id="edit-button" draggable="false" onclick="editNote(${item.id})">Editar</button>
-                    <button class="note-button unselect" draggable="false" onclick="deleteNote(${item.id})">Deletar</button>
+                    <button class="note-button unselect" draggable="false" onclick="deleteNote(${item.id}, ${item.userId})">Deletar</button>
                 </div>
             </div>
             `
