@@ -1,0 +1,1 @@
+## Frontend of scrapbook with database implementation ##
