@@ -1,5 +1,4 @@
 const errorFill = document.getElementById('error-fill');
-let validate = true;
 
 axios.defaults.baseURL = 'http://localhost:8080';
 
