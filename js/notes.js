@@ -23,7 +23,6 @@ async function addNote(event) {
         noteInput.value = '';
         errorFill.innerHTML = '';
         response.data;
-        showNotes();
     })
     .catch(error => {
         errorFill.style.display = 'block';
@@ -31,7 +30,7 @@ async function addNote(event) {
         errorFill.innerHTML = error.response.data.message;
     })
 
-    showNotes();
+    await showNotes();
 }
 
 async function editNote(id) {
@@ -52,18 +51,15 @@ async function editNote(id) {
 
     await axios.put(`/notes/${user.data.id}/${id}`, newNote);
 
-    showNotes();
+    await showNotes();
 }
 
-async function deleteNote(id, userId) {
+async function deleteNote(id) {
     const user = await axios.get(`/users/${userLS}`);
-    const userId = {
-        userId: user.data.id
-    }
 
-    await axios.delete(`/notes/${user.data.id}/${id}`), userId;
+    await axios.delete(`/notes/${user.data.id}/${id}`);
 
-    showNotes();
+    await showNotes();
 }
 
 async function showNotes() {
@@ -79,13 +75,13 @@ async function showNotes() {
             return (a.id - b.id)
         });
         errands.map(item => {
-            table.innerHTML += 
+            table.innerHTML +=
             `
             <div class="note note-margin-top note-margin-bottom">
                 <p>${item.note}</p>
                 <div class="note-button-container margin-bottom">
                     <button class="note-button unselect" id="edit-button" draggable="false" onclick="editNote(${item.id})">Editar</button>
-                    <button class="note-button unselect" draggable="false" onclick="deleteNote(${item.id}, ${item.userId})">Deletar</button>
+                    <button class="note-button unselect" draggable="false" onclick="deleteNote(${item.id})">Deletar</button>
                 </div>
             </div>
             `
